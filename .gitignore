@@ -1,0 +1,8 @@
+__pycache__
+.lh
+.vs
+.vscode
+Win32
+Win32Release
+x64
+VCMPAPISocket
