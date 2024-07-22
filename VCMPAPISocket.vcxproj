@@ -44,6 +44,7 @@
     <ClInclude Include="curl\urlapi.h" />
     <ClInclude Include="curl\websockets.h" />
     <ClInclude Include="easywsclient.hpp" />
+    <ClInclude Include="encoding.h" />
     <ClInclude Include="hmac_sha256.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="main.h" />

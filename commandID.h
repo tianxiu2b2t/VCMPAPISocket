@@ -1,4 +1,6 @@
 #pragma once
+#ifndef COMMAND_ID_H
+#define COMMAND_ID_H
 #define VCMPAPISocket_START 0x4D496ABE
 #define VCMPAPISocket_CONNECT 0x4D496ABE + 1
 #define VCMPAPISocket_RECVALL 0x4D496ABE + 2
@@ -6,3 +8,4 @@
 #define VCMPAPISocket_RECONNECT 0x4D496ABE + 4
 #define VCMPAPISocket_AUTHORIZATION 0x4D496ABE + 5
 #define VCMPAPISocket_ECHO_CLIENT 0x4D496ABE + 6
+#endif

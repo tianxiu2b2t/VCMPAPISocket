@@ -10,6 +10,7 @@
 #include "easywsclient.hpp"
 #include "SQImports.h"
 #include "commandID.h"
+#include "encoding.h"
 
 #include <time.h>
 #include <sstream>
@@ -21,7 +22,7 @@
 #include <random>
 
 #define AUTHOR "TTB-Network"
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 #define PLUGIN_NAME "VCMPAPISocket"
 
 PluginFuncs* Server;
@@ -210,6 +211,7 @@ void StartWebSocket() {
 }
 
 uint8_t onScriptLoad() {
+	Logger::info("Loading " + std::string(PLUGIN_NAME) + " " + std::string(VERSION) + " by " + std::string(AUTHOR));
 	Logger::info("Reading configuration from server.cfg...");
 
 	Configuration config;
@@ -336,7 +338,7 @@ SQInteger fn_SendMessage(HSQUIRRELVM v)
 		const SQChar* message;
 		sq->getstring(v, 2, &type);
 		sq->getstring(v, 3, &message);
-		WebSocketResult result = send(std::string((char*)type), std::string((char*)message));
+		WebSocketResult result = send(GbkToUtf8(std::string((char*)type)), GbkToUtf8(std::string((char*)message)));
 		sq->pushstring(v, (SQChar*)result.echo.c_str(), -1);
 		return 1;
 	} 
@@ -354,7 +356,7 @@ void callSquirrelFunction(const char* functional_name, std::string data) {
 	if (SQ_SUCCEEDED(sq->get(v, -2)))
 	{
 		sq->pushroottable(v);
-		sq->pushstring(v, (SQChar*)data.c_str(), -1);
+		sq->pushstring(v, (SQChar*)Utf8ToGbk(data).c_str(), -1);
 		sq->call(v, 2, 0, 1);
 	}
 	sq->pop(v, 1);
@@ -436,9 +438,9 @@ void onPluginCommand0(uint32_t cid, std::string data) {
 				WebSocketData wsd = parseWebSocketData(data);
 				sq->pushroottable(v);
 				sq->pushbool(v, wsd.status);
-				sq->pushstring(v, (SQChar*)wsd.type.c_str(), -1);
-				sq->pushstring(v, (SQChar*)wsd.data.dump(0).c_str(), -1);
-				sq->pushstring(v, (SQChar*)wsd.msg.c_str(), -1);
+				sq->pushstring(v, (SQChar*)Utf8ToGbk(wsd.type).c_str(), -1);
+				sq->pushstring(v, (SQChar*)Utf8ToGbk(wsd.data.dump(0)).c_str(), -1);
+				sq->pushstring(v, (SQChar*)Utf8ToGbk(wsd.msg).c_str(), -1);
 				sq->pushstring(v, (SQChar*)wsd.echo.c_str(), -1);
 				sq->call(v, 6, 0, 1);
 			}

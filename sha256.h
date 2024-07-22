@@ -17,6 +17,8 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#ifndef HASH256_H
+#define HASH256_H
 
 typedef struct {
   uint64_t length;
@@ -76,3 +78,4 @@ void Sha256Calculate(void const* Buffer,   // [in]
                      uint32_t BufferSize,  // [in]
                      SHA256_HASH* Digest   // [in]
 );
+#endif // !HASH256_H

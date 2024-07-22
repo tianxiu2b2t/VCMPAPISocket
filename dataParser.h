@@ -1,7 +1,8 @@
 #include "nlohmann/json.hpp"
 #include <string>
 #include <string.h>
-
+#ifndef DATAPARSER_H
+#define DATAPARSER_H
 using json = nlohmann::json;
 
 class DataContent
@@ -46,3 +47,5 @@ WSCallback_Imp dispatch(Callable callable_)
     return callback;
 }
 WebSocketData parseWebSocketData(std::string response);
+
+#endif
